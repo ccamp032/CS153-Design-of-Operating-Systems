@@ -20,11 +20,12 @@ sys_exit(void)
   return 0;  // not reached
 }
 
+// wait syscall - assignment1
 int
 sys_wait(void)
 {
   int *status;
-  argptr(0, (char**)&status, sizeof(int*));
+  argptr(0, (void*)&status, sizeof(status));
   return wait(status);
 }
 
@@ -92,26 +93,36 @@ sys_uptime(void)
   return xticks;
 }
 
+// Update the wait system call signature to int wait(int *status) - assignment 1
+// A handler for our new created exit(). 
+// Reads exit status from the user in the command line argument.
+// Then calls new created exit() and takes that argument as its parameter.
 int
 sys_exitStat(void)
 {
-  int status;
-  argint(0, &status);
-  exitStat(status);
-  return 0;  // not reached
+  int exit_Status;
+  if(argint(0, &exit_Status) < 0){
+    return -1;
+   }
+  return exitStat(exit_Status);
 }
 
+// A waitpid system call: int waitpid(int pid, int *status, int options) - assignment1
+// The system calls a wait for a process (not necessary a child process) with a pid that equals to one provided by the pid argument. 
+// The return value is the process id of the process that was terminated or -1 
+// If this process does not exist or an unexpected error occurred. 
 int
 sys_waitpid(void)
-{
-  int pid, options = 0;
-  int *status;
-  if (argint(0, &pid) < 0){
-    return -1;
+{ 
+  int pid;
+  int options = 0; // default value
+  int* status;
+  if(argint(0, &pid) < 0){
+   return -1;
   }
-  if (argptr(1, (void*)&status, sizeof(status)) < 0){
-    return 1;
+  if(argptr(1,(void*)&status, sizeof(status)) < 0){ 
+  return -1; 
   }
-
   return waitpid(pid, status, options);
 }
+

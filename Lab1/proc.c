@@ -267,10 +267,22 @@ exit(void)
   panic("zombie exit");
 }
 
-// Wait for a child process to exit and return its pid.
-// Return -1 if this process has no children.
+/* Added for assignment1.
+Wait for a child process to exit and return its pid.
+Return -1 if this process has no children.
+ 
+The int wait(int* status) system call prevents the current process from execution until any of its child processes is terminated (if any exists) 
+and returns the terminated child exit status through the status argument. 
+The system call returns the process id of the child that was terminated or -1 if no child exists (or unexpected error occurred). 
+Note that the wait system call can receive NULL as an argument. 
+In this case the childs exit status must be discarded.
+
+Updating this method to have int* in argument which is a status.
+It reads the child's exit status from the exitstatus field defined in struct
+proc in proc.h. exitstatus of child is set in proc.c's exitStat().
+*/
 int
-wait(int *status)
+wait(int* status)
 {
   struct proc *p;
   int havekids, pid;
@@ -295,8 +307,8 @@ wait(int *status)
         p->name[0] = 0;
         p->killed = 0;
         p->state = UNUSED;
-	if (status){*status = p->status;} //status not NULL
-	p->status = 0; //clear exit status
+	if(status) *status = p->exitstatus;
+	p->exitstatus = 0;
         release(&ptable.lock);
         return pid;
       }
@@ -312,7 +324,6 @@ wait(int *status)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
 }
-
 //PAGEBREAK: 42
 // Per-CPU process scheduler.
 // Each CPU calls scheduler() after setting itself up.
@@ -501,11 +512,10 @@ kill(int pid)
 // Exit the current process.  Does not return.
 // An exited process remains in the zombie state
 // until its parent calls wait() to find out it exited.
-void
+int
 exitStat(int status)
 {
   struct proc *curproc = myproc();
-  curproc->status = status;
   struct proc *p;
   int fd;
 
@@ -529,22 +539,22 @@ exitStat(int status)
 
   // Parent might be sleeping in wait().
   wakeup1(curproc->parent);
-
+  
   // Pass abandoned children to init.
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->parent == curproc){
       p->parent = initproc;
       if(p->state == ZOMBIE)
-        wakeup1(initproc);
+	wakeup1(initproc);
     }
   }
-  
-  //Jump into the scheduler, never to return
+
+  // Jump into the scheduler, never to return.
   curproc->state = ZOMBIE;
+  curproc->exitstatus = status;
   sched();
   panic("zombie exit");
 }
-
 //PAGEBREAK: 36
 // Print a process listing to console.  For debugging.
 // Runs when user types ^P on console.
@@ -582,43 +592,63 @@ procdump(void)
   }
 }
 
+// Added for assignment1.
+// This method waits for a process (not necessary a child process) with a pid
+// that equals to the one provided by the pid argument. The return value must
+// be the process id of the process that was terminated or -1 if this process
+// does not exist or if an unexpected error occurred.
+// This method is similar to the wait() defined above.
 int
-waitpid(int pid, int *status, int options)
+waitpid(int pid, int* status, int options)
 {
-  struct proc *p;
-  int match;
-  struct proc *curproc = myproc();
-
+  struct proc *p, *curproc = myproc();
+  int found_process; //similar to havekids in wait()
   acquire(&ptable.lock);
-  for(;;){
-    match = 0;
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      if(p->pid != pid)
-        continue;
-      match = 1;
-      if(p->state == ZOMBIE){
-        if(status){
-          *status = curproc->status;
-        }
-        pid = p->pid;
-        kfree(p->kstack);
-        p->kstack = 0;
-        freevm(p->pgdir);
-        p->pid = 0;
-        p->parent = 0;
-        p->name[0] = 0;
-        p->killed = 0;
-        p->state = UNUSED;
-        release(&ptable.lock);
-        return pid;
-      }
+  
+  //Loops continuously till the process with given pid is terminated
+  for(;;) {
+    found_process = 0;    
+    
+    //Scan through the process table looking for exited processes. Terminated
+    //processes will be in ZOMBIE state.
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+      // If the process pid does not match the given pid, no need to continue
+      // with this process.
+      if(p->pid != pid) continue;
+
+      found_process = 1;
+      if(p->state == ZOMBIE) {
+	//Found the process with the given pid that has exited.
+	kfree(p->kstack);
+	p->kstack = 0;
+	freevm(p->pgdir);
+	p->pid = 0;
+	p->parent = 0;
+	p->name[0] = 0;
+	p->killed = 0;
+	p->state = UNUSED;
+	if(status) *status = p->exitstatus;
+	p->exitstatus = 0;
+	release(&ptable.lock);
+	return pid;
+      } else if(options == 1) { //if options is passed by the user.
+	
+	//the process with the given pid is still running, so we
+	//don't block the current process, just release the lock on
+	//ptable and return 0.
+	release(&ptable.lock);
+	return 0;
+      } 
     }
 
-    if(!match || curproc->killed){
+    // No point waiting if the the process with given pid does not exist
+    // or the current process is killed.
+    if(!found_process || curproc->killed) {
       release(&ptable.lock);
       return -1;
     }
 
+    // Wait for the process with the given pid to exit.
     sleep(curproc, &ptable.lock);
   }
 }

@@ -103,6 +103,7 @@ extern int sys_unlink(void);
 extern int sys_wait(void);
 extern int sys_write(void);
 extern int sys_uptime(void);
+// Added two new syscalls below - assignment 1
 extern int sys_exitStat(void);
 extern int sys_waitpid(void);
 
@@ -128,8 +129,8 @@ static int (*syscalls[])(void) = {
 [SYS_link]    sys_link,
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
-[SYS_exitStat]	sys_exitStat,
-[SYS_waitpid]	sys_waitpid,
+[SYS_exitStat]	sys_exitStat, // Exit status syscall - assignment 1
+[SYS_waitpid]	sys_waitpid,  // waitpid syscall - assignment
 };
 
 void

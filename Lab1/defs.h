@@ -117,11 +117,12 @@ void            sched(void);
 void            setproc(struct proc*);
 void            sleep(void*, struct spinlock*);
 void            userinit(void);
-int             wait(int*);
+int             wait(int*); // Update the wait system call signature to int wait(int *status) - assignment 1
 void            wakeup(void*);
 void            yield(void);
-void		exitStat(int);
-int		waitpid(int, int*, int);
+
+int		exitStat(int);  // Change the exit system call signature to void exit(int status) - assignment 1
+int		waitpid(int, int*, int); // Add a waitpid system call: int waitpid(int pid, int *status, int options) - assignment 1
 
 // swtch.S
 void            swtch(struct context**, struct context*);

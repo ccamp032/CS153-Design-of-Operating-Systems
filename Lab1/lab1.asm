@@ -58,6 +58,7 @@ int main(int argc, char *argv[]){
   56:	83 ec 0c             	sub    $0xc,%esp
   59:	6a 00                	push   $0x0
   5b:	e8 a2 05 00 00       	call   602 <exitStat>
+
   return 0;
  }
   60:	8d 65 f8             	lea    -0x8(%ebp),%esp
@@ -85,8 +86,8 @@ int main(int argc, char *argv[]){
   7e:	66 90                	xchg   %ax,%ax
 
 00000080 <exitWait>:
-  // End of test
   exitStat(0);
+
   return 0;
  }
   
@@ -101,8 +102,8 @@ int exitWait(void) {
  
   printf(1, "\n  Parts a & b) testing exit(int status) and wait(int* status):\n");
   84:	bb 01 00 00 00       	mov    $0x1,%ebx
-  // End of test
   exitStat(0);
+
   return 0;
  }
   
@@ -334,7 +335,7 @@ int waitPid(void){
  1da:	53                   	push   %ebx
  1db:	56                   	push   %esi
  1dc:	e8 29 04 00 00       	call   60a <waitpid>
-  printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
+  printf(1, "\n This is the parent: Child# %d has exited with status %d\n",return_pid, exit_status);
  1e1:	ff 75 e0             	pushl  -0x20(%ebp)
  1e4:	50                   	push   %eax
  1e5:	68 60 0b 00 00       	push   $0xb60
@@ -357,7 +358,7 @@ int waitPid(void){
  213:	53                   	push   %ebx
  214:	56                   	push   %esi
  215:	e8 f0 03 00 00       	call   60a <waitpid>
-  printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
+  printf(1, "\n This is the parent: Child# %d has exited with status %d\n",return_pid, exit_status);
  21a:	ff 75 e0             	pushl  -0x20(%ebp)
  21d:	50                   	push   %eax
  21e:	68 60 0b 00 00       	push   $0xb60
@@ -380,7 +381,7 @@ int waitPid(void){
  24c:	53                   	push   %ebx
  24d:	56                   	push   %esi
  24e:	e8 b7 03 00 00       	call   60a <waitpid>
-  printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
+  printf(1, "\n This is the parent: Child# %d has exited with status %d\n",return_pid, exit_status);
  253:	ff 75 e0             	pushl  -0x20(%ebp)
  256:	50                   	push   %eax
  257:	68 60 0b 00 00       	push   $0xb60
@@ -403,7 +404,7 @@ int waitPid(void){
  285:	53                   	push   %ebx
  286:	56                   	push   %esi
  287:	e8 7e 03 00 00       	call   60a <waitpid>
-  printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
+  printf(1, "\n This is the parent: Child# %d has exited with status %d\n",return_pid, exit_status);
  28c:	ff 75 e0             	pushl  -0x20(%ebp)
  28f:	50                   	push   %eax
  290:	68 60 0b 00 00       	push   $0xb60
@@ -426,7 +427,7 @@ int waitPid(void){
  2be:	53                   	push   %ebx
  2bf:	56                   	push   %esi
  2c0:	e8 45 03 00 00       	call   60a <waitpid>
-  printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
+  printf(1, "\n This is the parent: Child# %d has exited with status %d\n",return_pid, exit_status);
  2c5:	ff 75 e0             	pushl  -0x20(%ebp)
  2c8:	50                   	push   %eax
  2c9:	68 60 0b 00 00       	push   $0xb60

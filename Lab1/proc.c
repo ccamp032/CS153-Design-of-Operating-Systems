@@ -267,19 +267,12 @@ exit(void)
   panic("zombie exit");
 }
 
-/* Added for assignment1.
+/* 
 Wait for a child process to exit and return its pid.
-Return -1 if this process has no children.
- 
-The int wait(int* status) system call prevents the current process from execution until any of its child processes is terminated (if any exists) 
-and returns the terminated child exit status through the status argument. 
-The system call returns the process id of the child that was terminated or -1 if no child exists (or unexpected error occurred). 
-Note that the wait system call can receive NULL as an argument. 
-In this case the childs exit status must be discarded.
-
-Updating this method to have int* in argument which is a status.
-It reads the child's exit status from the exitstatus field defined in struct
-proc in proc.h. exitstatus of child is set in proc.c's exitStat().
+Return -1 if this process has no children. 
+int wait(int* status) reads the child's exit status (exitstatus)  we defind in struct proc in proc.h
+The child exit status (existatus) is call in proc.c's function exitStat()
+ - assignment 1 
 */
 int
 wait(int* status)
@@ -290,7 +283,7 @@ wait(int* status)
   
   acquire(&ptable.lock);
   for(;;){
-    // Scan through table looking for exited children.
+    // Scan through table looking for exit children.
     havekids = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
       if(p->parent != curproc)
@@ -307,21 +300,21 @@ wait(int* status)
         p->name[0] = 0;
         p->killed = 0;
         p->state = UNUSED;
-	if(status) *status = p->exitstatus;
+	if(status){
+        *status = p->exitstatus;
+        }
 	p->exitstatus = 0;
         release(&ptable.lock);
         return pid;
       }
     }
-
-    // No point waiting if we don't have any children.
+    // No point in waiting if we don't have any children.
     if(!havekids || curproc->killed){
       release(&ptable.lock);
       return -1;
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
   }
 }
 //PAGEBREAK: 42
@@ -509,12 +502,17 @@ kill(int pid)
   return -1;
 }
 
-// Exit the current process.  Does not return.
-// An exited process remains in the zombie state
-// until its parent calls wait() to find out it exited.
+/* An exited process remains in the zombie state
+ until its parent calls wait() to find out it exited.
+ New exit function with int. 
+A exit process remains in a zombie state until its parent calls wait().
+ - assignment 1
+*/
 int
 exitStat(int status)
 {
+ // cprintf("Exit status: %d\n", status);
+
   struct proc *curproc = myproc();
   struct proc *p;
   int fd;
@@ -592,12 +590,14 @@ procdump(void)
   }
 }
 
-// Added for assignment1.
-// This method waits for a process (not necessary a child process) with a pid
-// that equals to the one provided by the pid argument. The return value must
-// be the process id of the process that was terminated or -1 if this process
-// does not exist or if an unexpected error occurred.
-// This method is similar to the wait() defined above.
+/* 
+ This method waits for a process (not necessary a child process) with a pid
+ that equals to the one provided by the pid argument.
+ The return value is the process id of the process that was terminated or -1.
+ This process does not exist or if an unexpected error occurred.
+ This function is similar to the wait() defined above.
+- assignment 1
+*/
 int
 waitpid(int pid, int* status, int options)
 {

@@ -11298,8 +11298,8 @@ sleep(void *chan, struct spinlock *lk)
 80103ddb:	e8 90 c5 ff ff       	call   80100370 <panic>
 
 80103de0 <wait>:
-It reads the child's exit status from the exitstatus field defined in struct
-proc in proc.h. exitstatus of child is set in proc.c's exitStat().
+The child exit status (existatus) is call in proc.c's function exitStat()
+ - assignment 1 
 */
 int
 wait(int* status)
@@ -11335,7 +11335,7 @@ myproc(void) {
 80103e09:	e8 c2 07 00 00       	call   801045d0 <acquire>
 80103e0e:	83 c4 10             	add    $0x10,%esp
   for(;;){
-    // Scan through table looking for exited children.
+    // Scan through table looking for exit children.
     havekids = 0;
 80103e11:	31 c0                	xor    %eax,%eax
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
@@ -11356,7 +11356,7 @@ myproc(void) {
   
   acquire(&ptable.lock);
   for(;;){
-    // Scan through table looking for exited children.
+    // Scan through table looking for exit children.
     havekids = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
 80103e36:	83 eb 80             	sub    $0xffffff80,%ebx
@@ -11367,18 +11367,18 @@ myproc(void) {
   
   acquire(&ptable.lock);
   for(;;){
-    // Scan through table looking for exited children.
+    // Scan through table looking for exit children.
     havekids = 0;
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
 80103e3e:	81 fb 54 4d 11 80    	cmp    $0x80114d54,%ebx
 80103e44:	75 e5                	jne    80103e2b <wait+0x4b>
 80103e46:	8d 76 00             	lea    0x0(%esi),%esi
 80103e49:	8d bc 27 00 00 00 00 	lea    0x0(%edi,%eiz,1),%edi
+        release(&ptable.lock);
         return pid;
       }
     }
-
-    // No point waiting if we don't have any children.
+    // No point in waiting if we don't have any children.
     if(!havekids || curproc->killed){
 80103e50:	85 c0                	test   %eax,%eax
 80103e52:	0f 84 85 00 00 00    	je     80103edd <wait+0xfd>
@@ -11388,9 +11388,8 @@ myproc(void) {
       release(&ptable.lock);
       return -1;
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
 80103e5f:	83 ec 08             	sub    $0x8,%esp
 80103e62:	68 20 2d 11 80       	push   $0x80112d20
 80103e67:	56                   	push   %esi
@@ -11433,7 +11432,7 @@ myproc(void) {
         p->name[0] = 0;
         p->killed = 0;
         p->state = UNUSED;
-	if(status) *status = p->exitstatus;
+	if(status){
 80103e90:	83 c4 10             	add    $0x10,%esp
 80103e93:	85 ff                	test   %edi,%edi
         // Found one.
@@ -11451,18 +11450,20 @@ myproc(void) {
 80103ea7:	c7 43 24 00 00 00 00 	movl   $0x0,0x24(%ebx)
         p->state = UNUSED;
 80103eae:	c7 43 0c 00 00 00 00 	movl   $0x0,0xc(%ebx)
-	if(status) *status = p->exitstatus;
+	if(status){
 80103eb5:	74 05                	je     80103ebc <wait+0xdc>
+        *status = p->exitstatus;
 80103eb7:	8b 43 7c             	mov    0x7c(%ebx),%eax
 80103eba:	89 07                	mov    %eax,(%edi)
+        }
 	p->exitstatus = 0;
         release(&ptable.lock);
 80103ebc:	83 ec 0c             	sub    $0xc,%esp
-        p->parent = 0;
-        p->name[0] = 0;
         p->killed = 0;
         p->state = UNUSED;
-	if(status) *status = p->exitstatus;
+	if(status){
+        *status = p->exitstatus;
+        }
 	p->exitstatus = 0;
 80103ebf:	c7 43 7c 00 00 00 00 	movl   $0x0,0x7c(%ebx)
         release(&ptable.lock);
@@ -11470,24 +11471,24 @@ myproc(void) {
 80103ecb:	e8 b0 07 00 00       	call   80104680 <release>
         return pid;
 80103ed0:	83 c4 10             	add    $0x10,%esp
+      return -1;
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
   }
 }
 80103ed3:	8d 65 f4             	lea    -0xc(%ebp),%esp
-        p->killed = 0;
-        p->state = UNUSED;
-	if(status) *status = p->exitstatus;
+	if(status){
+        *status = p->exitstatus;
+        }
 	p->exitstatus = 0;
         release(&ptable.lock);
         return pid;
 80103ed6:	89 f0                	mov    %esi,%eax
+      return -1;
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
   }
 }
 80103ed8:	5b                   	pop    %ebx
@@ -11495,10 +11496,10 @@ myproc(void) {
 80103eda:	5f                   	pop    %edi
 80103edb:	5d                   	pop    %ebp
 80103edc:	c3                   	ret    
+        return pid;
       }
     }
-
-    // No point waiting if we don't have any children.
+    // No point in waiting if we don't have any children.
     if(!havekids || curproc->killed){
       release(&ptable.lock);
 80103edd:	83 ec 0c             	sub    $0xc,%esp
@@ -11507,23 +11508,21 @@ myproc(void) {
       return -1;
 80103eea:	83 c4 10             	add    $0x10,%esp
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
   }
 }
 80103eed:	8d 65 f4             	lea    -0xc(%ebp),%esp
+      }
     }
-
-    // No point waiting if we don't have any children.
+    // No point in waiting if we don't have any children.
     if(!havekids || curproc->killed){
       release(&ptable.lock);
       return -1;
 80103ef0:	b8 ff ff ff ff       	mov    $0xffffffff,%eax
     }
-
-    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
-    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+    // Wait for children to exit
+    sleep(curproc, &ptable.lock);  
   }
 }
 80103ef5:	5b                   	pop    %ebx
@@ -11685,9 +11684,9 @@ kill(int pid)
 80103fe9:	8d bc 27 00 00 00 00 	lea    0x0(%edi,%eiz,1),%edi
 
 80103ff0 <exitStat>:
-// Exit the current process.  Does not return.
-// An exited process remains in the zombie state
-// until its parent calls wait() to find out it exited.
+A exit process remains in a zombie state until its parent calls wait().
+ - assignment 1
+*/
 int
 exitStat(int status)
 {
@@ -11710,7 +11709,7 @@ myproc(void) {
 80104003:	8b b0 ac 00 00 00    	mov    0xac(%eax),%esi
   popcli();
 80104009:	e8 22 05 00 00       	call   80104530 <popcli>
-{
+
   struct proc *curproc = myproc();
   struct proc *p;
   int fd;
@@ -12002,9 +12001,9 @@ procdump(void)
 801041df:	c3                   	ret    
 
 801041e0 <waitpid>:
-// be the process id of the process that was terminated or -1 if this process
-// does not exist or if an unexpected error occurred.
-// This method is similar to the wait() defined above.
+ This function is similar to the wait() defined above.
+- assignment 1
+*/
 int
 waitpid(int pid, int* status, int options)
 {

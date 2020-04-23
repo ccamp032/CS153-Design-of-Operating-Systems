@@ -22,7 +22,7 @@ int main(int argc, char *argv[]){
 
   printf(1, "\n This program tests the correctness of your lab#1\n");
   12:	83 ec 08             	sub    $0x8,%esp
-  15:	68 a0 0b 00 00       	push   $0xba0
+  15:	68 9c 0b 00 00       	push   $0xb9c
   1a:	6a 01                	push   $0x1
   1c:	e8 9f 06 00 00       	call   6c0 <printf>
   
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]){
     printf(1, "\ntype \"lab1 1\" to test exit and wait and \"lab1 2\" to test waitpid\n");
   45:	50                   	push   %eax
   46:	50                   	push   %eax
-  47:	68 d4 0b 00 00       	push   $0xbd4
+  47:	68 d0 0b 00 00       	push   $0xbd0
   4c:	6a 01                	push   $0x1
   4e:	e8 6d 06 00 00       	call   6c0 <printf>
   53:	83 c4 10             	add    $0x10,%esp
@@ -129,11 +129,11 @@ int exitWait(void) {
     if(i == 0){
   a5:	83 fb 01             	cmp    $0x1,%ebx
   a8:	0f 84 82 00 00 00    	je     130 <exitWait+0xb0>
-        printf(1, "\n This is child with PID# %d and I will exit with status %d\n", getpid(), 0);
+        printf(1, "\nThis is child with PID# %d and I will exit with status %d\n", getpid(), 0);
         exitStat(0);
       }
     else{
-	printf(1, "\n This is child with PID# %d and I will exit with status %d\n" ,getpid(), -1);
+	printf(1, "\nThis is child with PID# %d and I will exit with status %d\n" ,getpid(), -1);
   ae:	e8 2f 05 00 00       	call   5e2 <getpid>
   b3:	6a ff                	push   $0xffffffff
   b5:	50                   	push   %eax
@@ -164,7 +164,7 @@ int exitWait(void) {
   dc:	c3                   	ret    
   dd:	8d 76 00             	lea    0x0(%esi),%esi
     else{
-	printf(1, "\n This is child with PID# %d and I will exit with status %d\n" ,getpid(), -1);
+	printf(1, "\nThis is child with PID# %d and I will exit with status %d\n" ,getpid(), -1);
         exitStat(-1);
       } 
     }  
@@ -175,10 +175,10 @@ int exitWait(void) {
   e5:	83 ec 0c             	sub    $0xc,%esp
   e8:	50                   	push   %eax
   e9:	e8 7c 04 00 00       	call   56a <wait>
-      printf(1, "\n This is the parent: child with PID# %d has exited with status %d\n", return_pid, exit_status);
+      printf(1, "\nThis is the parent: child with PID# %d has exited with status %d\n", return_pid, exit_status);
   ee:	ff 75 f4             	pushl  -0xc(%ebp)
   f1:	50                   	push   %eax
-  f2:	68 64 0a 00 00       	push   $0xa64
+  f2:	68 60 0a 00 00       	push   $0xa60
   f7:	6a 01                	push   $0x1
   f9:	e8 c2 05 00 00       	call   6c0 <printf>
   fe:	83 c4 20             	add    $0x20,%esp
@@ -196,12 +196,12 @@ int exitWait(void) {
  10c:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
     else if (pid > 0){ // only the parent executes this code
       return_pid = wait(&exit_status);
-      printf(1, "\n This is the parent: child with PID# %d has exited with status %d\n", return_pid, exit_status);
+      printf(1, "\nThis is the parent: child with PID# %d has exited with status %d\n", return_pid, exit_status);
     } 
     else{ // something went wrong with fork system call
       printf(2, "\n Error using fork\n");
  110:	83 ec 08             	sub    $0x8,%esp
- 113:	68 18 0c 00 00       	push   $0xc18
+ 113:	68 14 0c 00 00       	push   $0xc14
  118:	6a 02                	push   $0x2
  11a:	e8 a1 05 00 00       	call   6c0 <printf>
       exitStat(-1);
@@ -214,7 +214,7 @@ int exitWait(void) {
     pid = fork();
     if(pid == 0){ // only the child executed this code
     if(i == 0){
-        printf(1, "\n This is child with PID# %d and I will exit with status %d\n", getpid(), 0);
+        printf(1, "\nThis is child with PID# %d and I will exit with status %d\n", getpid(), 0);
  130:	e8 ad 04 00 00       	call   5e2 <getpid>
  135:	6a 00                	push   $0x0
  137:	50                   	push   %eax
@@ -263,7 +263,7 @@ int waitPid(void){
   // use this part to test wait(int pid, int* status, int options)
 
   printf(1, "\n  Part c) testing waitpid(int pid, int* status, int options):\n");
- 178:	68 a8 0a 00 00       	push   $0xaa8
+ 178:	68 a4 0a 00 00       	push   $0xaa4
  17d:	6a 01                	push   $0x1
 
 int waitPid(void){
@@ -325,7 +325,7 @@ int waitPid(void){
  1c2:	8b 75 f0             	mov    -0x10(%ebp),%esi
  1c5:	83 c4 0c             	add    $0xc,%esp
  1c8:	56                   	push   %esi
- 1c9:	68 28 0b 00 00       	push   $0xb28
+ 1c9:	68 24 0b 00 00       	push   $0xb24
  1ce:	6a 01                	push   $0x1
  1d0:	e8 eb 04 00 00       	call   6c0 <printf>
   return_pid = waitpid(pid_a[3], &exit_status, 0);
@@ -337,7 +337,7 @@ int waitPid(void){
   printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
  1e1:	ff 75 e0             	pushl  -0x20(%ebp)
  1e4:	50                   	push   %eax
- 1e5:	68 64 0b 00 00       	push   $0xb64
+ 1e5:	68 60 0b 00 00       	push   $0xb60
  1ea:	6a 01                	push   $0x1
  1ec:	e8 cf 04 00 00       	call   6c0 <printf>
   sleep(5);
@@ -348,7 +348,7 @@ int waitPid(void){
  1fb:	8b 75 e8             	mov    -0x18(%ebp),%esi
  1fe:	83 c4 0c             	add    $0xc,%esp
  201:	56                   	push   %esi
- 202:	68 28 0b 00 00       	push   $0xb28
+ 202:	68 24 0b 00 00       	push   $0xb24
  207:	6a 01                	push   $0x1
  209:	e8 b2 04 00 00       	call   6c0 <printf>
   return_pid = waitpid(pid_a[1], &exit_status, 0);
@@ -360,7 +360,7 @@ int waitPid(void){
   printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
  21a:	ff 75 e0             	pushl  -0x20(%ebp)
  21d:	50                   	push   %eax
- 21e:	68 64 0b 00 00       	push   $0xb64
+ 21e:	68 60 0b 00 00       	push   $0xb60
  223:	6a 01                	push   $0x1
  225:	e8 96 04 00 00       	call   6c0 <printf>
   sleep(5);
@@ -371,7 +371,7 @@ int waitPid(void){
  234:	8b 75 ec             	mov    -0x14(%ebp),%esi
  237:	83 c4 0c             	add    $0xc,%esp
  23a:	56                   	push   %esi
- 23b:	68 28 0b 00 00       	push   $0xb28
+ 23b:	68 24 0b 00 00       	push   $0xb24
  240:	6a 01                	push   $0x1
  242:	e8 79 04 00 00       	call   6c0 <printf>
   return_pid = waitpid(pid_a[2], &exit_status, 0);
@@ -383,7 +383,7 @@ int waitPid(void){
   printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
  253:	ff 75 e0             	pushl  -0x20(%ebp)
  256:	50                   	push   %eax
- 257:	68 64 0b 00 00       	push   $0xb64
+ 257:	68 60 0b 00 00       	push   $0xb60
  25c:	6a 01                	push   $0x1
  25e:	e8 5d 04 00 00       	call   6c0 <printf>
   sleep(5);
@@ -394,7 +394,7 @@ int waitPid(void){
  26d:	8b 75 e4             	mov    -0x1c(%ebp),%esi
  270:	83 c4 0c             	add    $0xc,%esp
  273:	56                   	push   %esi
- 274:	68 28 0b 00 00       	push   $0xb28
+ 274:	68 24 0b 00 00       	push   $0xb24
  279:	6a 01                	push   $0x1
  27b:	e8 40 04 00 00       	call   6c0 <printf>
   return_pid = waitpid(pid_a[0], &exit_status, 0);
@@ -406,7 +406,7 @@ int waitPid(void){
   printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
  28c:	ff 75 e0             	pushl  -0x20(%ebp)
  28f:	50                   	push   %eax
- 290:	68 64 0b 00 00       	push   $0xb64
+ 290:	68 60 0b 00 00       	push   $0xb60
  295:	6a 01                	push   $0x1
  297:	e8 24 04 00 00       	call   6c0 <printf>
   sleep(5);
@@ -417,7 +417,7 @@ int waitPid(void){
  2a6:	8b 75 f4             	mov    -0xc(%ebp),%esi
  2a9:	83 c4 0c             	add    $0xc,%esp
  2ac:	56                   	push   %esi
- 2ad:	68 28 0b 00 00       	push   $0xb28
+ 2ad:	68 24 0b 00 00       	push   $0xb24
  2b2:	6a 01                	push   $0x1
  2b4:	e8 07 04 00 00       	call   6c0 <printf>
   return_pid = waitpid(pid_a[4], &exit_status, 0);
@@ -429,7 +429,7 @@ int waitPid(void){
   printf(1, "\n This is the partent: Child# %d has exited with status %d\n",return_pid, exit_status);
  2c5:	ff 75 e0             	pushl  -0x20(%ebp)
  2c8:	50                   	push   %eax
- 2c9:	68 64 0b 00 00       	push   $0xb64
+ 2c9:	68 60 0b 00 00       	push   $0xb60
  2ce:	6a 01                	push   $0x1
  2d0:	e8 eb 03 00 00       	call   6c0 <printf>
       
@@ -454,7 +454,7 @@ int waitPid(void){
  2ea:	e8 f3 02 00 00       	call   5e2 <getpid>
  2ef:	56                   	push   %esi
  2f0:	50                   	push   %eax
- 2f1:	68 e8 0a 00 00       	push   $0xae8
+ 2f1:	68 e4 0a 00 00       	push   $0xae4
  2f6:	6a 01                	push   $0x1
  2f8:	e8 c3 03 00 00       	call   6c0 <printf>
       exitStat(getpid() + 4);
@@ -1169,7 +1169,7 @@ printint(int fd, int xx, int base, int sgn)
  65a:	31 d2                	xor    %edx,%edx
  65c:	8d 4f 01             	lea    0x1(%edi),%ecx
  65f:	f7 f6                	div    %esi
- 661:	0f b6 92 34 0c 00 00 	movzbl 0xc34(%edx),%edx
+ 661:	0f b6 92 30 0c 00 00 	movzbl 0xc30(%edx),%edx
   }while((x /= base) != 0);
  668:	85 c0                	test   %eax,%eax
     x = xx;
@@ -1490,7 +1490,7 @@ putc(int fd, char c)
  7d8:	89 45 d0             	mov    %eax,-0x30(%ebp)
         if(s == 0)
           s = "(null)";
- 7db:	b8 2c 0c 00 00       	mov    $0xc2c,%eax
+ 7db:	b8 28 0c 00 00       	mov    $0xc28,%eax
  7e0:	85 db                	test   %ebx,%ebx
  7e2:	0f 44 d8             	cmove  %eax,%ebx
         while(*s != 0){
@@ -1597,7 +1597,7 @@ free(void *ap)
 
   bp = (Header*)ap - 1;
   for(p = freep; !(bp > p && bp < p->s.ptr); p = p->s.ptr)
- 861:	a1 34 0f 00 00       	mov    0xf34,%eax
+ 861:	a1 30 0f 00 00       	mov    0xf30,%eax
 static Header base;
 static Header *freep;
 
@@ -1682,7 +1682,7 @@ free(void *ap)
     p->s.ptr = bp;
  8b7:	89 08                	mov    %ecx,(%eax)
   freep = p;
- 8b9:	a3 34 0f 00 00       	mov    %eax,0xf34
+ 8b9:	a3 30 0f 00 00       	mov    %eax,0xf30
 }
  8be:	5b                   	pop    %ebx
  8bf:	5e                   	pop    %esi
@@ -1714,7 +1714,7 @@ free(void *ap)
   } else
     p->s.ptr = bp;
   freep = p;
- 8dd:	a3 34 0f 00 00       	mov    %eax,0xf34
+ 8dd:	a3 30 0f 00 00       	mov    %eax,0xf30
     bp->s.size += p->s.ptr->s.size;
     bp->s.ptr = p->s.ptr->s.ptr;
   } else
@@ -1755,7 +1755,7 @@ malloc(uint nbytes)
   nunits = (nbytes + sizeof(Header) - 1)/sizeof(Header) + 1;
  8f9:	8b 45 08             	mov    0x8(%ebp),%eax
   if((prevp = freep) == 0){
- 8fc:	8b 15 34 0f 00 00    	mov    0xf34,%edx
+ 8fc:	8b 15 30 0f 00 00    	mov    0xf30,%edx
 malloc(uint nbytes)
 {
   Header *p, *prevp;
@@ -1803,7 +1803,7 @@ malloc(uint nbytes)
       return (void*)(p + 1);
     }
     if(p == freep)
- 951:	39 05 34 0f 00 00    	cmp    %eax,0xf34
+ 951:	39 05 30 0f 00 00    	cmp    %eax,0xf30
  957:	89 c2                	mov    %eax,%edx
  959:	75 ed                	jne    948 <malloc+0x58>
   char *p;
@@ -1829,7 +1829,7 @@ malloc(uint nbytes)
  975:	50                   	push   %eax
  976:	e8 e5 fe ff ff       	call   860 <free>
   return freep;
- 97b:	8b 15 34 0f 00 00    	mov    0xf34,%edx
+ 97b:	8b 15 30 0f 00 00    	mov    0xf30,%edx
       }
       freep = prevp;
       return (void*)(p + 1);
@@ -1862,7 +1862,7 @@ malloc(uint nbytes)
  99c:	89 78 04             	mov    %edi,0x4(%eax)
       }
       freep = prevp;
- 99f:	89 15 34 0f 00 00    	mov    %edx,0xf34
+ 99f:	89 15 30 0f 00 00    	mov    %edx,0xf30
       return (void*)(p + 1);
  9a5:	83 c0 08             	add    $0x8,%eax
     }
@@ -1892,12 +1892,12 @@ malloc(uint nbytes)
   nunits = (nbytes + sizeof(Header) - 1)/sizeof(Header) + 1;
   if((prevp = freep) == 0){
     base.s.ptr = freep = prevp = &base;
- 9b6:	c7 05 34 0f 00 00 38 	movl   $0xf38,0xf34
+ 9b6:	c7 05 30 0f 00 00 34 	movl   $0xf34,0xf30
  9bd:	0f 00 00 
- 9c0:	c7 05 38 0f 00 00 38 	movl   $0xf38,0xf38
+ 9c0:	c7 05 34 0f 00 00 34 	movl   $0xf34,0xf34
  9c7:	0f 00 00 
     base.s.size = 0;
- 9ca:	b8 38 0f 00 00       	mov    $0xf38,%eax
- 9cf:	c7 05 3c 0f 00 00 00 	movl   $0x0,0xf3c
+ 9ca:	b8 34 0f 00 00       	mov    $0xf34,%eax
+ 9cf:	c7 05 38 0f 00 00 00 	movl   $0x0,0xf38
  9d6:	00 00 00 
  9d9:	e9 3e ff ff ff       	jmp    91c <malloc+0x2c>

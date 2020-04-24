@@ -1,0 +1,529 @@
+Only in /home/vagrant/lab/CS153/Lab1: bio.d
+Only in /home/vagrant/lab/CS153/Lab1: bio.o
+Only in /home/vagrant/lab/CS153/Lab1: bootasm.d
+Only in /home/vagrant/lab/CS153/Lab1: bootasm.o
+Only in /home/vagrant/lab/CS153/Lab1: bootblock
+Only in /home/vagrant/lab/CS153/Lab1: bootblock.asm
+Only in /home/vagrant/lab/CS153/Lab1: bootblock.o
+Only in /home/vagrant/lab/CS153/Lab1: bootblockother.o
+Only in /home/vagrant/lab/CS153/Lab1: bootmain.d
+Only in /home/vagrant/lab/CS153/Lab1: bootmain.o
+Only in /home/vagrant/lab/CS153/Lab1: _cat
+Only in /home/vagrant/lab/CS153/Lab1: cat.asm
+Only in /home/vagrant/lab/CS153/Lab1: cat.d
+Only in /home/vagrant/lab/CS153/Lab1: cat.o
+Only in /home/vagrant/lab/CS153/Lab1: cat.sym
+Only in /home/vagrant/lab/CS153/Lab1: console.d
+Only in /home/vagrant/lab/CS153/Lab1: console.o
+Only in original-xv6/: .cvsignore
+diff original-xv6/defs.h /home/vagrant/lab/CS153/Lab1/defs.h
+120c120
+< int             wait(void);
+---
+> int             wait(int*); // Update the wait system call signature to int wait(int *status) - assignment 1
+122a123,125
+> 
+> int		exitStat(int);  // Change the exit system call signature to void exit(int status) - assignment 1
+> int		waitpid(int, int*, int); // Add a waitpid system call: int waitpid(int pid, int *status, int options) - assignment 1
+Only in original-xv6/: .dir-locals.el
+Only in /home/vagrant/lab/CS153/Lab1: _echo
+Only in /home/vagrant/lab/CS153/Lab1: echo.asm
+Only in /home/vagrant/lab/CS153/Lab1: echo.d
+Only in /home/vagrant/lab/CS153/Lab1: echo.o
+Only in /home/vagrant/lab/CS153/Lab1: echo.sym
+Only in /home/vagrant/lab/CS153/Lab1: entry.o
+Only in /home/vagrant/lab/CS153/Lab1: entryother
+Only in /home/vagrant/lab/CS153/Lab1: entryother.asm
+Only in /home/vagrant/lab/CS153/Lab1: entryother.d
+Only in /home/vagrant/lab/CS153/Lab1: entryother.o
+Only in /home/vagrant/lab/CS153/Lab1: exec.d
+Only in /home/vagrant/lab/CS153/Lab1: exec.o
+Only in /home/vagrant/lab/CS153/Lab1: file.d
+Only in /home/vagrant/lab/CS153/Lab1: file.o
+Only in /home/vagrant/lab/CS153/Lab1: _forktest
+Only in /home/vagrant/lab/CS153/Lab1: forktest.asm
+diff original-xv6/forktest.c /home/vagrant/lab/CS153/Lab1/forktest.c
+37c37
+<     if(wait() < 0){
+---
+>     if(wait(0) < 0){
+43c43
+<   if(wait() != -1){
+---
+>   if(wait(0) != -1){
+Only in /home/vagrant/lab/CS153/Lab1: forktest.d
+Only in /home/vagrant/lab/CS153/Lab1: forktest.o
+Only in /home/vagrant/lab/CS153/Lab1: fs.d
+Only in /home/vagrant/lab/CS153/Lab1: fs.img
+Only in /home/vagrant/lab/CS153/Lab1: fs.o
+Only in original-xv6/: .gdbinit.tmpl
+Only in original-xv6/: .git
+Only in original-xv6/: .gitignore
+Only in /home/vagrant/lab/CS153/Lab1: _grep
+Only in /home/vagrant/lab/CS153/Lab1: grep.asm
+Only in /home/vagrant/lab/CS153/Lab1: grep.d
+Only in /home/vagrant/lab/CS153/Lab1: grep.o
+Only in /home/vagrant/lab/CS153/Lab1: grep.sym
+Only in /home/vagrant/lab/CS153/Lab1: ide.d
+Only in /home/vagrant/lab/CS153/Lab1: ide.o
+Only in /home/vagrant/lab/CS153/Lab1: _init
+Only in /home/vagrant/lab/CS153/Lab1: init.asm
+diff original-xv6/init.c /home/vagrant/lab/CS153/Lab1/init.c
+34c34
+<     while((wpid=wait()) >= 0 && wpid != pid)
+---
+>     while((wpid=wait(0)) >= 0 && wpid != pid)
+Only in /home/vagrant/lab/CS153/Lab1: initcode
+Only in /home/vagrant/lab/CS153/Lab1: initcode.asm
+Only in /home/vagrant/lab/CS153/Lab1: initcode.d
+Only in /home/vagrant/lab/CS153/Lab1: initcode.o
+Only in /home/vagrant/lab/CS153/Lab1: initcode.out
+Only in /home/vagrant/lab/CS153/Lab1: init.d
+Only in /home/vagrant/lab/CS153/Lab1: init.o
+Only in /home/vagrant/lab/CS153/Lab1: init.sym
+Only in /home/vagrant/lab/CS153/Lab1: ioapic.d
+Only in /home/vagrant/lab/CS153/Lab1: ioapic.o
+Only in /home/vagrant/lab/CS153/Lab1: kalloc.d
+Only in /home/vagrant/lab/CS153/Lab1: kalloc.o
+Only in /home/vagrant/lab/CS153/Lab1: kbd.d
+Only in /home/vagrant/lab/CS153/Lab1: kbd.o
+Only in /home/vagrant/lab/CS153/Lab1: kernel
+Only in /home/vagrant/lab/CS153/Lab1: kernel.asm
+Only in /home/vagrant/lab/CS153/Lab1: kernel.sym
+Only in /home/vagrant/lab/CS153/Lab1: _kill
+Only in /home/vagrant/lab/CS153/Lab1: kill.asm
+Only in /home/vagrant/lab/CS153/Lab1: kill.d
+Only in /home/vagrant/lab/CS153/Lab1: kill.o
+Only in /home/vagrant/lab/CS153/Lab1: kill.sym
+Only in /home/vagrant/lab/CS153/Lab1: _lab1
+Only in /home/vagrant/lab/CS153/Lab1: lab1.asm
+Only in /home/vagrant/lab/CS153/Lab1: lab1.c
+Only in /home/vagrant/lab/CS153/Lab1: lab1.d
+Only in /home/vagrant/lab/CS153/Lab1: lab1.o
+Only in /home/vagrant/lab/CS153/Lab1: lab1.sym
+Only in /home/vagrant/lab/CS153/Lab1: lapic.d
+Only in /home/vagrant/lab/CS153/Lab1: lapic.o
+Only in /home/vagrant/lab/CS153/Lab1: _ln
+Only in /home/vagrant/lab/CS153/Lab1: ln.asm
+Only in /home/vagrant/lab/CS153/Lab1: ln.d
+Only in /home/vagrant/lab/CS153/Lab1: ln.o
+Only in /home/vagrant/lab/CS153/Lab1: ln.sym
+Only in /home/vagrant/lab/CS153/Lab1: log.d
+Only in /home/vagrant/lab/CS153/Lab1: log.o
+Only in /home/vagrant/lab/CS153/Lab1: _ls
+Only in /home/vagrant/lab/CS153/Lab1: ls.asm
+Only in /home/vagrant/lab/CS153/Lab1: ls.d
+Only in /home/vagrant/lab/CS153/Lab1: ls.o
+Only in /home/vagrant/lab/CS153/Lab1: ls.sym
+Only in /home/vagrant/lab/CS153/Lab1: main.d
+Only in /home/vagrant/lab/CS153/Lab1: main.o
+diff original-xv6/Makefile /home/vagrant/lab/CS153/Lab1/Makefile
+183a184
+> 	_lab1\
+Only in /home/vagrant/lab/CS153/Lab1: _mkdir
+Only in /home/vagrant/lab/CS153/Lab1: mkdir.asm
+Only in /home/vagrant/lab/CS153/Lab1: mkdir.d
+Only in /home/vagrant/lab/CS153/Lab1: mkdir.o
+Only in /home/vagrant/lab/CS153/Lab1: mkdir.sym
+Only in /home/vagrant/lab/CS153/Lab1: mkfs
+Only in /home/vagrant/lab/CS153/Lab1: mp.d
+Only in /home/vagrant/lab/CS153/Lab1: mp.o
+Only in /home/vagrant/lab/CS153/Lab1: picirq.d
+Only in /home/vagrant/lab/CS153/Lab1: picirq.o
+Only in /home/vagrant/lab/CS153/Lab1: pipe.d
+Only in /home/vagrant/lab/CS153/Lab1: pipe.o
+Only in /home/vagrant/lab/CS153/Lab1: printf.d
+Only in /home/vagrant/lab/CS153/Lab1: printf.o
+diff original-xv6/proc.c /home/vagrant/lab/CS153/Lab1/proc.c
+270,271c270,276
+< // Wait for a child process to exit and return its pid.
+< // Return -1 if this process has no children.
+---
+> /* 
+> Wait for a child process to exit and return its pid.
+> Return -1 if this process has no children. 
+> int wait(int* status) reads the child's exit status (exitstatus)  we defind in struct proc in proc.h
+> The child exit status (existatus) is call in proc.c's function exitStat()
+>  - assignment 1 
+> */
+273c278
+< wait(void)
+---
+> wait(int* status)
+281c286
+<     // Scan through table looking for exited children.
+---
+>     // Scan through table looking for exit children.
+297a303,306
+> 	if(status){
+>         *status = p->exitstatus;
+>         }
+> 	p->exitstatus = 0;
+302,303c311
+< 
+<     // No point waiting if we don't have any children.
+---
+>     // No point in waiting if we don't have any children.
+308,310c316,317
+< 
+<     // Wait for children to exit.  (See wakeup1 call in proc_exit.)
+<     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+---
+>     // Wait for children to exit
+>     sleep(curproc, &ptable.lock);  
+313d319
+< 
+498a505,555
+> /* An exited process remains in the zombie state
+>  until its parent calls wait() to find out it exited.
+>  New exit function with int. 
+> A exit process remains in a zombie state until its parent calls wait().
+>  - assignment 1
+> */
+> int
+> exitStat(int status)
+> {
+>  // cprintf("Exit status: %d\n", status);
+> 
+>   struct proc *curproc = myproc();
+>   struct proc *p;
+>   int fd;
+> 
+>   if(curproc == initproc)
+>     panic("init exiting");
+> 
+>   // Close all open files.
+>   for(fd = 0; fd < NOFILE; fd++){
+>     if(curproc->ofile[fd]){
+>       fileclose(curproc->ofile[fd]);
+>       curproc->ofile[fd] = 0;
+>     }
+>   }
+> 
+>   begin_op();
+>   iput(curproc->cwd);
+>   end_op();
+>   curproc->cwd = 0;
+> 
+>   acquire(&ptable.lock);
+> 
+>   // Parent might be sleeping in wait().
+>   wakeup1(curproc->parent);
+>   
+>   // Pass abandoned children to init.
+>   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+>     if(p->parent == curproc){
+>       p->parent = initproc;
+>       if(p->state == ZOMBIE)
+> 	wakeup1(initproc);
+>     }
+>   }
+> 
+>   // Jump into the scheduler, never to return.
+>   curproc->state = ZOMBIE;
+>   curproc->exitstatus = status;
+>   sched();
+>   panic("zombie exit");
+> }
+532a590,652
+>   }
+> }
+> 
+> /* 
+>  This method waits for a process (not necessary a child process) with a pid
+>  that equals to the one provided by the pid argument.
+>  The return value is the process id of the process that was terminated or -1.
+>  This process does not exist or if an unexpected error occurred.
+>  This function is similar to the wait() defined above.
+> - assignment 1
+> */
+> int
+> waitpid(int pid, int* status, int options)
+> {
+>   struct proc *p, *curproc = myproc();
+>   int found_process; //similar to havekids in wait()
+>   acquire(&ptable.lock);
+>   
+>   //Loops continuously till the process with given pid is terminated
+>   for(;;) {
+>     found_process = 0;    
+>     
+>     //Scan through the process table looking for exited processes. Terminated
+>     //processes will be in ZOMBIE state.
+>     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+>       // If the process pid does not match the given pid, no need to continue
+>       // with this process.
+>       if(p->pid != pid) continue;
+> 
+>       found_process = 1;
+>       if(p->state == ZOMBIE) {
+> 	//Found the process with the given pid that has exited.
+> 	kfree(p->kstack);
+> 	p->kstack = 0;
+> 	freevm(p->pgdir);
+> 	p->pid = 0;
+> 	p->parent = 0;
+> 	p->name[0] = 0;
+> 	p->killed = 0;
+> 	p->state = UNUSED;
+> 	if(status) *status = p->exitstatus;
+> 	p->exitstatus = 0;
+> 	release(&ptable.lock);
+> 	return pid;
+>       } else if(options == 1) { //if options is passed by the user.
+> 	
+> 	//the process with the given pid is still running, so we
+> 	//don't block the current process, just release the lock on
+> 	//ptable and return 0.
+> 	release(&ptable.lock);
+> 	return 0;
+>       } 
+>     }
+> 
+>     // No point waiting if the the process with given pid does not exist
+>     // or the current process is killed.
+>     if(!found_process || curproc->killed) {
+>       release(&ptable.lock);
+>       return -1;
+>     }
+> 
+>     // Wait for the process with the given pid to exit.
+>     sleep(curproc, &ptable.lock);
+Only in /home/vagrant/lab/CS153/Lab1: proc.d
+diff original-xv6/proc.h /home/vagrant/lab/CS153/Lab1/proc.h
+51a52,53
+> 
+>   int exitstatus;              // Exit Status - assignment 1
+Only in /home/vagrant/lab/CS153/Lab1: proc.o
+Only in /home/vagrant/lab/CS153/Lab1: _rm
+Only in /home/vagrant/lab/CS153/Lab1: rm.asm
+Only in /home/vagrant/lab/CS153/Lab1: rm.d
+Only in /home/vagrant/lab/CS153/Lab1: rm.o
+Only in /home/vagrant/lab/CS153/Lab1: rm.sym
+Only in /home/vagrant/lab/CS153/Lab1: _sh
+Only in /home/vagrant/lab/CS153/Lab1: sh.asm
+diff original-xv6/sh.c /home/vagrant/lab/CS153/Lab1/sh.c
+96c96
+<     wait();
+---
+>     wait(0);
+120,121c120,121
+<     wait();
+<     wait();
+---
+>     wait(0);
+>     wait(0);
+169c169
+<     wait();
+---
+>     wait(0);
+Only in /home/vagrant/lab/CS153/Lab1: sh.d
+Only in /home/vagrant/lab/CS153/Lab1: sh.o
+Only in /home/vagrant/lab/CS153/Lab1: sh.sym
+Only in /home/vagrant/lab/CS153/Lab1: sleeplock.d
+Only in /home/vagrant/lab/CS153/Lab1: sleeplock.o
+Only in /home/vagrant/lab/CS153/Lab1: spinlock.d
+Only in /home/vagrant/lab/CS153/Lab1: spinlock.o
+Only in /home/vagrant/lab/CS153/Lab1: _stressfs
+Only in /home/vagrant/lab/CS153/Lab1: stressfs.asm
+diff original-xv6/stressfs.c /home/vagrant/lab/CS153/Lab1/stressfs.c
+46c46
+<   wait();
+---
+>   wait(0);
+Only in /home/vagrant/lab/CS153/Lab1: stressfs.d
+Only in /home/vagrant/lab/CS153/Lab1: stressfs.o
+Only in /home/vagrant/lab/CS153/Lab1: stressfs.sym
+Only in /home/vagrant/lab/CS153/Lab1: string.d
+Only in /home/vagrant/lab/CS153/Lab1: string.o
+Only in /home/vagrant/lab/CS153/Lab1: swtch.o
+diff original-xv6/syscall.c /home/vagrant/lab/CS153/Lab1/syscall.c
+105a106,108
+> // Added two new syscalls below - assignment 1
+> extern int sys_exitStat(void);
+> extern int sys_waitpid(void);
+128a132,133
+> [SYS_exitStat]	sys_exitStat, // Exit status syscall - assignment 1
+> [SYS_waitpid]	sys_waitpid,  // waitpid syscall - assignment
+Only in /home/vagrant/lab/CS153/Lab1: syscall.d
+diff original-xv6/syscall.h /home/vagrant/lab/CS153/Lab1/syscall.h
+22a23,24
+> #define SYS_exitStat	22 
+> #define SYS_waitpid	23
+Only in /home/vagrant/lab/CS153/Lab1: syscall.o
+Only in /home/vagrant/lab/CS153/Lab1: sysfile.d
+Only in /home/vagrant/lab/CS153/Lab1: sysfile.o
+diff original-xv6/sysproc.c /home/vagrant/lab/CS153/Lab1/sysproc.c
+22a23
+> // wait syscall - assignment1
+26c27,29
+<   return wait();
+---
+>   int *status;
+>   argptr(0, (void*)&status, sizeof(status));
+>   return wait(status);
+91a95,128
+> 
+> // Update the wait system call signature to int wait(int *status) - assignment 1
+> // A handler for our new created exit(). 
+> // Reads exit status from the user in the command line argument.
+> // Then calls new created exit() and takes that argument as its parameter.
+> int
+> sys_exitStat(void)
+> {
+>   int exit_Status;
+>   if(argint(0, &exit_Status) < 0){
+>     return -1;
+>    }
+>   return exitStat(exit_Status);
+> }
+> 
+> // A waitpid system call: int waitpid(int pid, int *status, int options) - assignment1
+> // The system calls a wait for a process (not necessary a child process) with a pid that equals to one provided by the pid argument. 
+> // The return value is the process id of the process that was terminated or -1 
+> // If this process does not exist or an unexpected error occurred. 
+> int
+> sys_waitpid(void)
+> { 
+>   int pid;
+>   int options = 0; // default value
+>   int* status;
+>   if(argint(0, &pid) < 0){
+>    return -1;
+>   }
+>   if(argptr(1,(void*)&status, sizeof(status)) < 0){ 
+>   return -1; 
+>   }
+>   return waitpid(pid, status, options);
+> }
+> 
+Only in /home/vagrant/lab/CS153/Lab1: sysproc.d
+Only in /home/vagrant/lab/CS153/Lab1: sysproc.o
+Only in /home/vagrant/lab/CS153/Lab1: trapasm.o
+Only in /home/vagrant/lab/CS153/Lab1: trap.d
+Only in /home/vagrant/lab/CS153/Lab1: trap.o
+Only in /home/vagrant/lab/CS153/Lab1: uart.d
+Only in /home/vagrant/lab/CS153/Lab1: uart.o
+Only in /home/vagrant/lab/CS153/Lab1: ulib.d
+Only in /home/vagrant/lab/CS153/Lab1: ulib.o
+Only in /home/vagrant/lab/CS153/Lab1: umalloc.d
+Only in /home/vagrant/lab/CS153/Lab1: umalloc.o
+diff original-xv6/user.h /home/vagrant/lab/CS153/Lab1/user.h
+7c7
+< int wait(void);
+---
+> int wait(int*); // Updated wait syscall signature to int wait(int *status) - assignment 1 
+25a26,28
+> // Added two syscalls below - assignment 1
+> int exitStat(int);  
+> int waitpid(int, int*, int);  
+Only in /home/vagrant/lab/CS153/Lab1: _usertests
+Only in /home/vagrant/lab/CS153/Lab1: usertests.asm
+diff original-xv6/usertests.c /home/vagrant/lab/CS153/Lab1/usertests.c
+69c69
+<   wait();
+---
+>   wait(0);
+112c112
+<   wait();
+---
+>   wait(0);
+349c349
+<     wait();
+---
+>     wait(0);
+397,399c397,399
+<   wait();
+<   wait();
+<   wait();
+---
+>   wait(0);
+>   wait(0);
+>   wait(0);
+416c416
+<       if(wait() != pid){
+---
+>       if(wait(0) != pid){
+456c456
+<     wait();
+---
+>     wait(0);
+489c489
+<     wait();
+---
+>     wait(0);
+555c555
+<     wait();
+---
+>     wait(0);
+623c623
+<     wait();
+---
+>     wait(0);
+797c797
+<       wait();
+---
+>       wait(0);
+849c849
+<       wait();
+---
+>       wait(0);
+884c884
+<     wait();
+---
+>     wait(0);
+1400c1400
+<     if(wait() < 0){
+---
+>     if(wait(0) < 0){
+1406c1406
+<   if(wait() != -1){
+---
+>   if(wait(0) != -1){
+1449c1449
+<   wait();
+---
+>   wait(0);
+1509c1509
+<     wait();
+---
+>     wait(0);
+1536c1536
+<     wait();
+---
+>     wait(0);
+1580c1580
+<     wait();
+---
+>     wait(0);
+1635c1635
+<   wait();
+---
+>   wait(0);
+1723c1723
+<   wait();
+---
+>   wait(0);
+Only in /home/vagrant/lab/CS153/Lab1: usertests.d
+Only in /home/vagrant/lab/CS153/Lab1: usertests.o
+Only in /home/vagrant/lab/CS153/Lab1: usertests.sym
+Only in /home/vagrant/lab/CS153/Lab1: usys.o
+diff original-xv6/usys.S /home/vagrant/lab/CS153/Lab1/usys.S
+31a32,33
+> SYSCALL(exitStat)
+> SYSCALL(waitpid)
+Only in /home/vagrant/lab/CS153/Lab1: vectors.o
+Only in /home/vagrant/lab/CS153/Lab1: vectors.S
+Only in /home/vagrant/lab/CS153/Lab1: vm.d
+Only in /home/vagrant/lab/CS153/Lab1: vm.o
+Only in /home/vagrant/lab/CS153/Lab1: _wc
+Only in /home/vagrant/lab/CS153/Lab1: wc.asm
+Only in /home/vagrant/lab/CS153/Lab1: wc.d
+Only in /home/vagrant/lab/CS153/Lab1: wc.o
+Only in /home/vagrant/lab/CS153/Lab1: wc.sym
+Only in /home/vagrant/lab/CS153/Lab1: xv6.img
+Only in /home/vagrant/lab/CS153/Lab1: _zombie
+Only in /home/vagrant/lab/CS153/Lab1: zombie.asm
+Only in /home/vagrant/lab/CS153/Lab1: zombie.d
+Only in /home/vagrant/lab/CS153/Lab1: zombie.o
+Only in /home/vagrant/lab/CS153/Lab1: zombie.sym
